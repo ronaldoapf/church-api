@@ -1,0 +1,87 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  MEMBER
+  ADMIN
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+}
+
+enum TokenType {
+  EMAIL_VALIDATION
+  PASSWORD_RESET
+  INVITE
+}
+
+model Member {
+  id String @id @default(uuid())
+
+  name         String
+  email        String @unique
+  passwordHash String @map("password_hash")
+
+  birthDate   DateTime?
+  birthMonth  Int?
+  baptismDate DateTime?
+  phone       String?
+  address     String?
+
+  role   Role   @default(MEMBER)
+  status Status @default(ACTIVE)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  tokens  Token[]
+  invites Invite[]
+
+  @@map("members")
+}
+
+model Invite {
+  id    String @id @default(uuid())
+  email String
+  role  Role
+
+  authorId String
+  author   Member @relation(fields: [authorId], references: [id])
+
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([email])
+  @@map("invites")
+}
+
+model Token {
+  id               String    @id @default(uuid())
+  token            String    @unique
+  type             TokenType
+  memberId         String    @map("member_id")
+  hasBeenValidated Boolean   @default(false) @map("has_been_validated")
+
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  member Member @relation(fields: [memberId], references: [id])
+
+  @@map("tokens")
+}
