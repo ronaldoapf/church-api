@@ -36,8 +36,8 @@ model Member {
   email        String @unique
   passwordHash String @map("password_hash")
 
-  birthDate   DateTime?
-  birthMonth  Int?
+  birthDate   DateTime
+  birthMonth  Int
   baptismDate DateTime?
   phone       String?
   address     String?
