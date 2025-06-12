@@ -1,11 +1,12 @@
 import { verifyJwt } from "@/http/middlewares/verify-jwt";
+import { verifyOwner } from "@/http/middlewares/verify-owner";
 import { makeGetMemberProfileUseCase } from "@/usecases/factories/members/make-get-member-profile.usecase";
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 
 export const getMemberProfileController: FastifyPluginAsyncZod = async (app) => {
   app.get("/members/profile", {
-    onRequest: [verifyJwt],
+    onRequest: [verifyJwt, verifyOwner],
     schema: {
       tags: ["members"],
       
