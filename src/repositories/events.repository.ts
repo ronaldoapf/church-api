@@ -8,4 +8,5 @@ export interface EventsRepository {
   ): Promise<Event>;
   findById(id: string): Promise<Event | null>;
   delete(id: string): Promise<Event>
+  update(id: string, data: Prisma.EventUpdateInput): Promise<Event>;
 }
