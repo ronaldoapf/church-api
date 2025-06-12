@@ -1,5 +1,5 @@
 import type { Member, Prisma } from "@prisma/client";
-import type { MembersRepository } from "../members.repository";
+import type { FindManyPagination, MembersRepository } from "../members.repository";
 
 export class InMemoryMembersRepository implements MembersRepository {
   public member: Member[] = []
@@ -24,13 +24,12 @@ export class InMemoryMembersRepository implements MembersRepository {
       passwordHash: data.passwordHash,
       role: data.role || "MEMBER",
       baptismDate: data.baptismDate ? new Date(data.baptismDate) : null,
-      birthDate: data.birthDate ? new Date(data.birthDate) : null,
-      birthMonth: data.birthMonth || null,
+      birthDate: new Date(data.birthDate),
+      birthMonth: data.birthMonth ?? 1, 
       status: data.status || "ACTIVE",
       createdAt: new Date(),
       updatedAt: new Date(),
     }
-
 
     this.member.push(newMember)
 
