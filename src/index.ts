@@ -14,6 +14,7 @@ import { env } from './env';
 import { errorHandler } from './error-handler';
 import { AuthModule } from './http/controllers/auth/auth.module';
 import { MemberModule } from './http/controllers/members/member.module';
+import { EventModule } from './http/controllers/events/event.module';
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -50,3 +51,4 @@ app.register(fastifyJwt, {
 
 app.register(AuthModule)
 app.register(MemberModule)
+app.register(EventModule)

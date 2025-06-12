@@ -52,6 +52,7 @@ model Member {
   invites Invite[]
 
   @@map("members")
+  Event Event[]
 }
 
 model Invite {
@@ -84,4 +85,20 @@ model Token {
   member Member @relation(fields: [memberId], references: [id])
 
   @@map("tokens")
+}
+
+model Event {
+  id String @id @default(uuid())
+  name String
+  description String
+  date DateTime
+  address String
+
+  createdById String @map("created_by_id")
+  createdBy Member @relation(fields: [createdById], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("events")
 }
