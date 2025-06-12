@@ -6,6 +6,8 @@ interface RegisterMemberRequestUseCase {
   name: string;
   email: string;
   password: string;
+  birthDate: Date;
+  birthMonth: number;
 }
 
 interface RegisterMemberResponseUseCase extends Member {}
@@ -13,7 +15,7 @@ interface RegisterMemberResponseUseCase extends Member {}
 export class RegisterMemberUseCase {
   constructor(private readonly membersRepository: MembersRepository) {}
 
-  async execute({ name, email, password }: RegisterMemberRequestUseCase): Promise<RegisterMemberResponseUseCase> {
+  async execute({ name, email, password, birthDate, birthMonth }: RegisterMemberRequestUseCase): Promise<RegisterMemberResponseUseCase> {
     const existingMember = await this.membersRepository.findByEmail(email);
 
     if (existingMember) {
@@ -22,11 +24,12 @@ export class RegisterMemberUseCase {
 
     const passwordHash = await hashPassword(password);
     
-    // Create the new member with hashed password
     const newMember = await this.membersRepository.create({
       name,
       email,
-      passwordHash
+      passwordHash,
+      birthDate,
+      birthMonth
     });
 
     return newMember;
