@@ -6,7 +6,6 @@ import { z } from "zod";
 export const registerMemberController: FastifyPluginAsyncZod = async (app) => {
   app.post("/members", 
     { 
-      onRequest: [verifyJwt],
       schema: {
         tags: ["members"],
         summary: "Register a new member",
