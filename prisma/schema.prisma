@@ -52,6 +52,7 @@ model Member {
   invites Invite[]
 
   @@map("members")
+  Event Event[]
 }
 
 model Invite {
@@ -92,6 +93,9 @@ model Event {
   description String
   date DateTime
   address String
+
+  createdById String @map("created_by_id")
+  createdBy Member @relation(fields: [createdById], references: [id])
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

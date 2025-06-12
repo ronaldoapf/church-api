@@ -3,35 +3,45 @@ import type { Event, Prisma } from "@prisma/client";
 import type { EventsRepository } from "../events.repository";
 
 export class PrismaEventsRepository implements EventsRepository {
-  async create(data: Prisma.EventCreateInput): Promise<Event> {
+  async create(
+    data: Omit<Prisma.EventCreateInput, "createdBy">,
+    createdById: string
+  ): Promise<Event> {
     const event = await prisma.event.create({
-      data,
-    })
+      data: {
+        ...data,
+        createdBy: {
+          connect: {
+            id: createdById,
+          },
+        },
+      },
+    });
 
     return event;
   }
 
   async findById(id: string): Promise<Event | null> {
-    const event = await prisma.event.findUnique({
-      where: {
-        id,
-      }
-    })
-
-    if (!event) {
-      return null;
-    }
-
-    return event;
+    return prisma.event.findUnique({
+      where: { id },
+    });
   }
 
   async findMany(): Promise<Event[] | null> {
-    const events = await prisma.event.findMany()
+    return prisma.event.findMany();
+  }
 
-    if (!events) {
-      return null;
+  async delete(id: string): Promise<Event> {
+    const event = await prisma.event.findUnique({
+      where: { id },
+    });
+  
+    if (!event) {
+      throw new Error("Event not found.");
     }
 
-    return events;
+    return await prisma.event.delete({
+      where: { id },
+    });
   }
 }

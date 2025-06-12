@@ -33,13 +33,17 @@ export class RegisterEventUseCase {
       throw new Error("Member not found.");
     }
 
-    const event = await this.eventsRepository.create({
-      name,
-      description,
-      date,
-      address,
-    });
+    const event = await this.eventsRepository.create(
+      {
+        name,
+        description,
+        date,
+        address,
+      },
+      memberId
+    );
 
     return { event };
   }
 }
+

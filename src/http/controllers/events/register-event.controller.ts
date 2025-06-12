@@ -1,5 +1,5 @@
 import { verifyJwt } from "@/http/middlewares/verify-jwt";
-import { makeRegisterEventUseCase } from "@/usecases/factories/events/make-register-member.usecase";
+import { makeRegisterEventUseCase } from "@/usecases/factories/events/make-register-events.usecase";
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 
