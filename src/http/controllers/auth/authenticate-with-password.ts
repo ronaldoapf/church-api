@@ -30,7 +30,9 @@ export const authenticateWithPasswordController: FastifyPluginAsyncZod = async (
       })
 
       const token = await reply.jwtSign(
-      {},
+      {
+        role: member.role,
+      },
       {
         sign: {
           sub: member.id

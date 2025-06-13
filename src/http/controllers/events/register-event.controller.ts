@@ -1,4 +1,4 @@
-import { verifyJwt } from "@/http/middlewares/verify-jwt";
+import { verifyAdmin } from "@/http/middlewares/verifiy-admin";
 import { makeRegisterEventUseCase } from "@/usecases/factories/events/make-register-events.usecase";
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
@@ -6,7 +6,7 @@ import { z } from "zod";
 export const registerEventController: FastifyPluginAsyncZod = async (app) => {
   app.post("/events",
     {
-      onRequest: [verifyJwt],
+      onRequest: [verifyAdmin],
       schema: {
         tags: ["events"],
         summary: "Register a new event",

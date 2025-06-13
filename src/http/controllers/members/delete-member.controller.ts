@@ -1,5 +1,4 @@
-import { verifyJwt } from "@/http/middlewares/verify-jwt";
-import { verifyOwner } from "@/http/middlewares/verify-owner";
+import { verifyAdminOrSelf } from "@/http/middlewares/verify-admin-or-self";
 import { makeDeleteMemberUseCase } from "@/usecases/factories/members/make-delete-member.usecase";
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
@@ -7,7 +6,7 @@ import { z } from "zod";
 export const deleteMemberController: FastifyPluginAsyncZod = async (app) => {
   app.delete("/members/:id", 
     { 
-      onRequest: [verifyJwt, verifyOwner],
+      onRequest: [verifyAdminOrSelf],
       schema: {
         tags: ["members"],
         summary: "Delete a member",

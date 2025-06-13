@@ -1,5 +1,4 @@
-import { verifyJwt } from "@/http/middlewares/verify-jwt";
-import { verifyOwner } from "@/http/middlewares/verify-owner";
+import { verifyAdminOrSelf } from "@/http/middlewares/verify-admin-or-self";
 import { makeDeleteEventUseCase } from "@/usecases/factories/events/make-delete-event.usecase";
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
@@ -7,7 +6,7 @@ import { z } from "zod";
 export const deleteEventController: FastifyPluginAsyncZod = async (app) => {
   app.delete("/events/:eventId", 
     { 
-      onRequest: [verifyJwt, verifyOwner],
+      onRequest:[verifyAdminOrSelf],
       schema: {
         tags: ["events"],
         summary: "Delete a event",
