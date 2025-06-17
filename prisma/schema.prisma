@@ -53,6 +53,10 @@ model Member {
 
   @@map("members")
   Event Event[]
+  
+  departments Department[] @relation("MemberDepartments")
+
+  createdDepartments Department[] @relation("DepartmentCreatedBy")
 }
 
 model Invite {
@@ -101,4 +105,20 @@ model Event {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("events")
+}
+
+model Department {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+
+  createdByUserId String
+  createdBy       Member   @relation("DepartmentCreatedBy", fields: [createdByUserId], references: [id])
+
+  users Member[] @relation("MemberDepartments")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("departments")
 }
