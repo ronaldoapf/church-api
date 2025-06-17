@@ -7,7 +7,6 @@ export const getEventsController: FastifyPluginAsyncZod = async (app) => {
   app.get(
     "/events",
     {
-      onRequest: [verifyJwt],
       schema: {
         tags: ["events"],
         summary: "Get events",

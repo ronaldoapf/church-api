@@ -1,5 +1,4 @@
-import { verifyJwt } from "@/http/middlewares/verify-jwt";
-import { verifyOwner } from "@/http/middlewares/verify-owner";
+import { verifyAdminOrSelf } from "@/http/middlewares/verify-admin-or-self";
 import { makeUpdateMemberUseCase } from "@/usecases/factories/members/make-update-member.usecase copy";
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
@@ -7,7 +6,7 @@ import { z } from "zod";
 export const updateMemberController: FastifyPluginAsyncZod = async (app) => {
   app.patch("/members/:memberId", 
     { 
-      onRequest: [verifyJwt, verifyOwner],
+      onRequest: [verifyAdminOrSelf],
       schema: {
         tags: ["members"],
         summary: "Update a member",

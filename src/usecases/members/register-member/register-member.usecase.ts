@@ -29,7 +29,8 @@ export class RegisterMemberUseCase {
       email,
       passwordHash,
       birthDate,
-      birthMonth
+      birthMonth,
+      role: "MEMBER"
     });
 
     return newMember;

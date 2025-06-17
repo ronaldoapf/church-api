@@ -1,4 +1,3 @@
-import { verifyJwt } from "@/http/middlewares/verify-jwt";
 import { makeGetEventIdUseCase } from "@/usecases/factories/events/make-get-event-id.usecase";
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
@@ -7,7 +6,6 @@ export const getEventIdController: FastifyPluginAsyncZod = async (app) => {
   app.get(
     "/events/:eventId",
     {
-      onRequest: [verifyJwt],
       schema: {
         tags: ["events"],
         summary: "Get event by ID",

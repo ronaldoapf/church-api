@@ -1,14 +1,13 @@
-import { verifyJwt } from "@/http/middlewares/verify-jwt";
-import { verifyOwner } from "@/http/middlewares/verify-owner";
 import { makeUpdateEventUseCase } from "@/usecases/factories/events/make-update-event.usecase";
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
+import { verifyAdmin } from "@/http/middlewares/verifiy-admin";
 
 export const updateEventController: FastifyPluginAsyncZod = async (app) => {
   app.patch(
     "/events/:eventId",
     {
-      onRequest: [verifyJwt, verifyOwner],
+      onRequest: [verifyAdmin],
       schema: {
         tags: ["events"],
         summary: "Update an event",
