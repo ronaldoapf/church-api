@@ -1,3 +1,4 @@
+import { verifyAdmin } from "@/http/middlewares/verifiy-admin";
 import { makeRegisterDepartmentUseCase } from "@/usecases/factories/departments/make-register-department.usecase";
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
@@ -5,6 +6,7 @@ import { z } from "zod";
 export const registerDepartmentController: FastifyPluginAsyncZod = async (app) => {
   app.post("/departments",
     {
+      onRequest: [verifyAdmin],
       schema: {
         tags: ["departments"],
         summary: "Register a new department",
