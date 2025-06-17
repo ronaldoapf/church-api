@@ -1,5 +1,5 @@
 import { verifyAdminOrSelf } from "@/http/middlewares/verify-admin-or-self";
-import { makeUpdateMemberUseCase } from "@/usecases/factories/members/make-update-member.usecase copy";
+import { makeUpdateMemberUseCase } from "@/usecases/factories/members/make-update-member.usecase";
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 
