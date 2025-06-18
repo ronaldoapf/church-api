@@ -5,6 +5,8 @@ import { getDepartmentsController } from "./get-departments.controller";
 import { getDepartmentController } from "./get-department.controller";
 import { deleteDepartmentController } from "./delete-department.controller";
 import { updateDepartmentController } from "./update-department.controller";
+import { addMemberToDepartmentController } from "./add-member-department.controller";
+import { removeMemberFromDepartmentController } from "./remove-member-department.controller";
 
 export const DepartmentModule = (app: FastifyInstance) => {
     app.addHook("onRequest", verifyJwt);
@@ -14,4 +16,6 @@ export const DepartmentModule = (app: FastifyInstance) => {
     app.register(getDepartmentController);
     app.register(deleteDepartmentController);
     app.register(updateDepartmentController);
+    app.register(addMemberToDepartmentController);
+    app.register(removeMemberFromDepartmentController);
 }
