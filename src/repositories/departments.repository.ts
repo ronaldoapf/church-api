@@ -18,4 +18,6 @@ export interface DepartmentsRepository {
   delete(id: string): Promise<Department>;
   create(data: Prisma.DepartmentCreateInput): Promise<Department>;
   update(id: string, data: Prisma.DepartmentUpdateInput): Promise<Department>;
+  addMemberToDepartment(departmentId: string, memberId: string): Promise<Department>;
+  removeMemberToDepartment(departmentId: string, memberId: string): Promise<Department>;
 }

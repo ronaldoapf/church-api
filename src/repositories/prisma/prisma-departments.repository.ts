@@ -75,4 +75,32 @@ export class PrismaDepartmentsRepository implements DepartmentsRepository {
       data, 
     })
   }
+
+  async addMemberToDepartment(departmentId: string, memberId: string): Promise<Department> {
+    return await prisma.department.update({
+      where: { id: departmentId },
+      data: {
+        users: {
+          connect: { id: memberId },
+        },
+      },
+      include: {
+        users: true, 
+      },
+    });
+  }
+
+  async removeMemberToDepartment(departmentId: string, memberId: string): Promise<Department> {
+    return await prisma.department.update({
+      where: { id: departmentId },
+      data: {
+        users: {
+          disconnect: { id: memberId },
+        },
+      },
+      include: {
+        users: true, 
+      },
+    });
+  }
 }
